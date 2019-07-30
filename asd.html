@@ -47,7 +47,7 @@
 }
 </style>
 <body>
-<div id="main" onclick="changecolour()" class="resizable" onmousewheel="rotate(event)">
+<div id="main" class="resizable" onmousewheel="rotate(event)">
   <div id="divmain" class="resizers" onmousewheel="rotate(event)"><strong>Drag Move and Resize</strong>
     <div class="top-left" id="divmaintop-left"></div>
     <div class="top-right" id="divmaintop-right"></div>
@@ -93,14 +93,7 @@ function dragElement(elmnt) {
   }
 }
 
-function changecolour() {
-      var colorarray =["cyan","blue","red","pink","cornsilk","brown","green","grey"];
-      var arraylength =  colorarray.length;
-      var randomcolorno = Math.floor(Math.random()*arraylength);
-      var randomcolor = colorarray[randomcolorno];
-      document.getElementById('divmain').style.background=randomcolor;
-      document.getElementById('main').style.background=randomcolor;
-    }
+
     var y=0;
     function rotate(e){
     var x=e.deltaY;
