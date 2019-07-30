@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<style>
+#main {
+  position: absolute;
+  width: 300px;
+  height: 40px;
+  text-align: center;
+  border: 3px solid #4caf50;
+  background-color: #03a9f4;
+}
+
+#divmain {
+  padding: 10px;
+  cursor: move;
+  background-color: #03a9f4;
+  color: black;
+  font-style: 30px;
+}
+.top-left,.top-right,.bottom-left,.bottom-right{
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  color: black;
+  border: 3px solid black;
+}
+.top-left{
+  cursor: nw-resize;
+  top: -5px;
+  left: -5px; 
+}
+.top-right{
+  cursor: ne-resize;
+  top: -5px;
+  right: -5px;
+}
+.bottom-left{
+  cursor: sw-resize;
+  bottom: -5px;
+  left: -5px;
+}
+.bottom-right{
+  cursor: se-resize;
+  bottom: -5px;
+  right: -5px;
+}
+</style>
+<body>
+<div id="main" onclick="changecolour()" class="resizable" onmousewheel="rotate(event)">
+  <div id="divmain" class="resizers" onmousewheel="rotate(event)"><strong>Drag Move and Resize</strong>
+    <div class="top-left" id="divmaintop-left"></div>
+    <div class="top-right" id="divmaintop-right"></div>
+    <div class="bottom-left" id="divmainbottom-left"></div>
+    <div class="bottom-right" id="divmainbottom-right"></div>
+  </div>
+</div>
+
+<script>
+
+
+dragElement(document.getElementById("main"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById("div"+elmnt.id)) {
+    document.getElementById("div"+elmnt.id).onmousedown = dragMouseDown;
+  } else {
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+function changecolour() {
+      var colorarray =["cyan","blue","red","pink","cornsilk","brown","green","grey"];
+      var arraylength =  colorarray.length;
+      var randomcolorno = Math.floor(Math.random()*arraylength);
+      var randomcolor = colorarray[randomcolorno];
+      document.getElementById('divmain').style.background=randomcolor;
+      document.getElementById('main').style.background=randomcolor;
+    }
+    var y=0;
+    function rotate(e){
+    var x=e.deltaY;
+    console.log(x);
+    if (x>0) {
+    	y++;
+       document.getElementById('main').style.transform="rotate("+y+"deg)";
+    }else{
+    	y--;
+    	document.getElementById('main').style.transform="rotate("+y+"deg)";
+    }
+	}
+
+
+
+</script>
+
+</body>
+</html>
